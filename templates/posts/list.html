@@ -2,11 +2,24 @@
 
 {% block title %}Posts{% endblock title %}
 {% block content %}
-<ul>
-    {% for post in post_list %}
-    <li>
-        <a href="{% url 'detail' post.id %}">{{ post.title }}</a>
-    </li>
-    {% endfor %}
-</ul>
+{% for post in post_list  %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title"> {{ post.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ post.subtitle }}</h6>
+        <p class="card-text">{{ post.body | truncatechars:500 }}</p>
+        <a href="{% url 'detail' post.id %}" class="card-link">Read More</a>
+        {% if user == post.author %} 
+          <p class="author-options">
+           <a href="{% url 'edit' post.id %}" class="card-link">Edit</a>
+           <a href="{% url 'delete' post.id %}" class="card-link">Delete</a>
+          </p>
+        {% endif %}
+
+
+    </div>
+    <br />
+
+</div>
+{% endfor %}
 {% endblock content %}
